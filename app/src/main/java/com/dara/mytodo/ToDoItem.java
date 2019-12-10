@@ -15,19 +15,19 @@ import java.util.Objects;
  */
 
 @Entity(tableName = "to_do_items_table")
-public class ToDo implements Parcelable {
+public class ToDoItem implements Parcelable {
     @NonNull
     @PrimaryKey
     private String title;
     private String details;
-    private List category;
+    private ToDoList category;
     private String date;
     private String time;
     private Boolean isCompleted;
 
     // Constructor
-    public ToDo(@NonNull String title, String details, List category, String date,
-                String time, Boolean isCompleted) {
+    public ToDoItem(@NonNull String title, String details, ToDoList category, String date,
+                    String time, Boolean isCompleted) {
         this.title = title;
         this.details = details;
         this.category = category;
@@ -54,11 +54,11 @@ public class ToDo implements Parcelable {
         this.details = details;
     }
 
-    public List getCategory() {
+    public ToDoList getCategory() {
         return category;
     }
 
-    public void setCategory(List category) {
+    public void setCategory(ToDoList category) {
         this.category = category;
     }
 
@@ -87,25 +87,25 @@ public class ToDo implements Parcelable {
     }
 
     // Parcelable implementation
-    private ToDo(Parcel in) {
+    private ToDoItem(Parcel in) {
         title = Objects.requireNonNull(in.readString());
         details = in.readString();
-        category = in.readParcelable(List.class.getClassLoader());
+        category = in.readParcelable(ToDoList.class.getClassLoader());
         date = in.readString();
         time = in.readString();
         byte tmpIsCompleted = in.readByte();
         isCompleted = tmpIsCompleted == 0 ? null : tmpIsCompleted == 1;
     }
 
-    public static final Creator<ToDo> CREATOR = new Creator<ToDo>() {
+    public static final Creator<ToDoItem> CREATOR = new Creator<ToDoItem>() {
         @Override
-        public ToDo createFromParcel(Parcel in) {
-            return new ToDo(in);
+        public ToDoItem createFromParcel(Parcel in) {
+            return new ToDoItem(in);
         }
 
         @Override
-        public ToDo[] newArray(int size) {
-            return new ToDo[size];
+        public ToDoItem[] newArray(int size) {
+            return new ToDoItem[size];
         }
     };
 

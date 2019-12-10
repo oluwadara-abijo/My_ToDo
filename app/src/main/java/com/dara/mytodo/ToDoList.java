@@ -17,14 +17,14 @@ import java.util.Objects;
  */
 
 @Entity(tableName = "list_table")
-public class List implements Parcelable {
+public class ToDoList implements Parcelable {
     @NonNull
     @PrimaryKey
     private String title;
-    private ArrayList<ToDo> items;
+    private ArrayList<ToDoItem> items;
 
     // Constructor
-    public List(@NotNull String title, ArrayList<ToDo> items) {
+    public ToDoList(@NotNull String title, ArrayList<ToDoItem> items) {
         this.title = title;
         this.items = items;
     }
@@ -39,29 +39,29 @@ public class List implements Parcelable {
         this.title = title;
     }
 
-    public ArrayList<ToDo> getItems() {
+    public ArrayList<ToDoItem> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<ToDo> items) {
+    public void setItems(ArrayList<ToDoItem> items) {
         this.items = items;
     }
 
     // Parcelable implementation
-    private List(Parcel in) {
+    private ToDoList(Parcel in) {
         title = Objects.requireNonNull(in.readString());
-        items = in.createTypedArrayList(ToDo.CREATOR);
+        items = in.createTypedArrayList(ToDoItem.CREATOR);
     }
 
-    public static final Creator<List> CREATOR = new Creator<List>() {
+    public static final Creator<ToDoList> CREATOR = new Creator<ToDoList>() {
         @Override
-        public List createFromParcel(Parcel in) {
-            return new List(in);
+        public ToDoList createFromParcel(Parcel in) {
+            return new ToDoList(in);
         }
 
         @Override
-        public List[] newArray(int size) {
-            return new List[size];
+        public ToDoList[] newArray(int size) {
+            return new ToDoList[size];
         }
     };
 
