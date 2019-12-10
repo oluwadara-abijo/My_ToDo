@@ -20,13 +20,13 @@ public class ToDo implements Parcelable {
     @PrimaryKey
     private String title;
     private String details;
-    private String category;
+    private List category;
     private String date;
     private String time;
     private Boolean isCompleted;
 
     // Constructor
-    public ToDo(@NonNull String title, String details, String category, String date,
+    public ToDo(@NonNull String title, String details, List category, String date,
                 String time, Boolean isCompleted) {
         this.title = title;
         this.details = details;
@@ -36,11 +36,61 @@ public class ToDo implements Parcelable {
         this.isCompleted = isCompleted;
     }
 
+    // Getters and setters
+    @NonNull
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(@NonNull String title) {
+        this.title = title;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public List getCategory() {
+        return category;
+    }
+
+    public void setCategory(List category) {
+        this.category = category;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public Boolean getCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(Boolean completed) {
+        isCompleted = completed;
+    }
+
     // Parcelable implementation
     private ToDo(Parcel in) {
         title = Objects.requireNonNull(in.readString());
         details = in.readString();
-        category = in.readString();
+        category = in.readParcelable(List.class.getClassLoader());
         date = in.readString();
         time = in.readString();
         byte tmpIsCompleted = in.readByte();
@@ -68,60 +118,10 @@ public class ToDo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeString(details);
-        dest.writeString(category);
+        dest.writeParcelable(category, flags);
         dest.writeString(date);
         dest.writeString(time);
         dest.writeByte((byte) (isCompleted == null ? 0 : isCompleted ? 1 : 2));
-    }
-
-    // Getters and setters
-    @NonNull
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(@NonNull String title) {
-        this.title = title;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public Boolean getCompleted() {
-        return isCompleted;
-    }
-
-    public void setCompleted(Boolean completed) {
-        isCompleted = completed;
     }
 
 }
