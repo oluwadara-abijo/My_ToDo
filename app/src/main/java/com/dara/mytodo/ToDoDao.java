@@ -1,5 +1,6 @@
 package com.dara.mytodo;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -34,8 +35,8 @@ public interface ToDoDao {
     void deleteItem(ToDoItem toDoItem);
 
     @Query("SELECT * FROM list_table")
-    List<ToDoList> getLists();
+    LiveData<List<ToDoList>> getLists();
 
     @Query("SELECT * FROM to_do_items_table WHERE title==:listTitle ")
-    List<ToDoItem> getToDoItems(String listTitle);
+    LiveData<List<ToDoItem>> getToDoItems(String listTitle);
 }
