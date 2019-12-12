@@ -37,6 +37,6 @@ public interface ToDoDao {
     @Query("SELECT * FROM list_table")
     LiveData<List<ToDoList>> getLists();
 
-    @Query("SELECT * FROM to_do_items_table WHERE title==:listTitle ")
-    LiveData<List<ToDoItem>> getToDoItems(String listTitle);
+    @Query("SELECT * FROM to_do_items_table")
+    LiveData<List<ToDoItem>> getToDoItems();
 }
