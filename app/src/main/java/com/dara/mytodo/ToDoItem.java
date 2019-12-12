@@ -20,13 +20,13 @@ public class ToDoItem implements Parcelable {
     @PrimaryKey
     private String title;
     private String details;
-    private ToDoList category;
+    private String category;
     private String date;
     private String time;
     private Boolean isCompleted;
 
     // Constructor
-    public ToDoItem(@NonNull String title, String details, ToDoList category, String date,
+    public ToDoItem(@NonNull String title, String details, String category, String date,
                     String time, Boolean isCompleted) {
         this.title = title;
         this.details = details;
@@ -54,11 +54,11 @@ public class ToDoItem implements Parcelable {
         this.details = details;
     }
 
-    public ToDoList getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(ToDoList category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -118,7 +118,7 @@ public class ToDoItem implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeString(details);
-        dest.writeParcelable(category, flags);
+        dest.writeString(category);
         dest.writeString(date);
         dest.writeString(time);
         dest.writeByte((byte) (isCompleted == null ? 0 : isCompleted ? 1 : 2));

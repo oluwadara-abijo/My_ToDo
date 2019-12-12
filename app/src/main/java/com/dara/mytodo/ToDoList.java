@@ -5,11 +5,12 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,14 +18,16 @@ import java.util.Objects;
  */
 
 @Entity(tableName = "list_table")
+@ForeignKey(entity = ToDoItem.class, parentColumns = {"title", "details", "category", "date",
+        "time", "isCompleted"}, childColumns = {"title", "items"})
 public class ToDoList implements Parcelable {
     @NonNull
     @PrimaryKey
     private String title;
-    private ArrayList<ToDoItem> items;
+    private List<ToDoItem> items;
 
     // Constructor
-    public ToDoList(@NotNull String title, ArrayList<ToDoItem> items) {
+    public ToDoList(@NotNull String title, List<ToDoItem> items) {
         this.title = title;
         this.items = items;
     }
@@ -39,11 +42,11 @@ public class ToDoList implements Parcelable {
         this.title = title;
     }
 
-    public ArrayList<ToDoItem> getItems() {
+    public List<ToDoItem> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<ToDoItem> items) {
+    public void setItems(List<ToDoItem> items) {
         this.items = items;
     }
 
