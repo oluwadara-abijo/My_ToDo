@@ -13,7 +13,7 @@ public class ToDoRepository {
     private LiveData<List<ToDoItem>> items;
     private LiveData<List<ToDoList>> lists;
 
-    private ToDoRepository(Application application) {
+    public ToDoRepository(Application application) {
         ToDoRoomDatabase database = ToDoRoomDatabase.getDatabase(application);
         mDao = database.toDoDao();
         items = mDao.getToDoItems();
