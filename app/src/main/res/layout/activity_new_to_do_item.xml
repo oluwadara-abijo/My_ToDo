@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewToDoItemActivity">
+
+    <EditText
+        android:id="@+id/editText_title"
+        style="@style/EditTextStyle"
+        android:hint="@string/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_details"
+        style="@style/EditTextStyle"
+        android:hint="@string/details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_title" />
+
+    <EditText
+        android:id="@+id/editText_date"
+        style="@style/EditTextStyle"
+        android:hint="@string/date"
+        android:inputType="datetime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_details" />
+
+    <EditText
+        android:id="@+id/editText_time"
+        style="@style/EditTextStyle"
+        android:hint="@string/time"
+        android:inputType="datetime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_date" />
+
+
+    <EditText
+        android:id="@+id/editText_category"
+        style="@style/EditTextStyle"
+        android:hint="@string/category"
+        android:inputType="datetime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_time" />
+
+    <EditText
+        android:id="@+id/editText_isCompleted"
+        style="@style/EditTextStyle"
+        android:hint="@string/completed"
+        android:inputType="datetime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_category" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="0dp"
+        android:id="@+id/btn_save"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:background="@color/colorAccent"
+        android:text="@string/save_to_do"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_isCompleted" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
