@@ -90,7 +90,7 @@ public class ToDoItem implements Parcelable {
     private ToDoItem(Parcel in) {
         title = Objects.requireNonNull(in.readString());
         details = in.readString();
-        category = in.readParcelable(ToDoList.class.getClassLoader());
+        category = in.readString();
         date = in.readString();
         time = in.readString();
         byte tmpIsCompleted = in.readByte();

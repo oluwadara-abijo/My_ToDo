@@ -26,7 +26,7 @@
         android:id="@+id/editText_date"
         style="@style/EditTextStyle"
         android:hint="@string/date"
-        android:inputType="datetime"
+        android:inputType="numberDecimal|datetime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_details" />
@@ -35,7 +35,7 @@
         android:id="@+id/editText_time"
         style="@style/EditTextStyle"
         android:hint="@string/time"
-        android:inputType="datetime"
+        android:inputType="numberDecimal|datetime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_date" />
@@ -45,7 +45,6 @@
         android:id="@+id/editText_category"
         style="@style/EditTextStyle"
         android:hint="@string/category"
-        android:inputType="datetime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_time" />
@@ -54,7 +53,6 @@
         android:id="@+id/editText_isCompleted"
         style="@style/EditTextStyle"
         android:hint="@string/completed"
-        android:inputType="datetime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_category" />
