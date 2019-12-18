@@ -78,7 +78,7 @@ public class ToDoItem implements Parcelable {
         this.time = time;
     }
 
-    public Boolean getCompleted() {
+    public Boolean isCompleted() {
         return isCompleted;
     }
 

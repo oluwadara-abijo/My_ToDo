@@ -1,16 +1,18 @@
 package com.dara.mytodo;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Toast;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,9 +39,16 @@ public class MainActivity extends AppCompatActivity {
         // Set click listener on FAB
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
+            List<ToDoItem> itemList = mViewModel.getItems().getValue();
+            for (ToDoItem item : itemList) {
+                Log.d("ITEMS>>>", item.toString());
+            }
+
             Intent intent = new Intent(MainActivity.this, NewToDoItemActivity.class);
             startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+
         });
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

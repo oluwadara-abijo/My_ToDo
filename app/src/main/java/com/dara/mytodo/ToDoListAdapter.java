@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,20 +18,13 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoVi
     class ToDoViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleTextView;
         private final TextView detailsTextView;
-        private final TextView dateTextView;
-        private final TextView timeTextView;
-        private final TextView categoryTextView;
-        private final TextView isCompletedTextView;
-
+        private final CheckBox checkBox;
 
         private ToDoViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.tv_title);
             detailsTextView = itemView.findViewById(R.id.tv_details);
-            dateTextView = itemView.findViewById(R.id.tv_date);
-            timeTextView = itemView.findViewById(R.id.tv_time);
-            categoryTextView = itemView.findViewById(R.id.tv_category);
-            isCompletedTextView = itemView.findViewById(R.id.tv_is_completed);
+            checkBox = itemView.findViewById(R.id.checkbox);
         }
     }
 
@@ -54,10 +48,16 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoVi
             ToDoItem currentItem = mItems.get(position);
             holder.titleTextView.setText(currentItem.getTitle());
             holder.detailsTextView.setText(currentItem.getDetails());
-            holder.dateTextView.setText(currentItem.getDate());
-            holder.timeTextView.setText(currentItem.getTime());
-            holder.categoryTextView.setText(currentItem.getCategory());
-            holder.isCompletedTextView.setText(currentItem.getCompleted().toString());
+            if (currentItem.isCompleted()) {
+                holder.checkBox.isChecked();
+            }
+
+            holder.checkBox.setOnClickListener(v -> {
+                boolean checked = ((CheckBox) v).isChecked();
+                if (checked) {
+                    currentItem.isCompleted();
+                }
+            });
         } else {
             // Covers the case of data not being ready yet.
             holder.titleTextView.setText("No Item");

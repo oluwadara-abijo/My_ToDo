@@ -45,7 +45,6 @@ public class NewToDoItemActivity extends AppCompatActivity {
                 String date = dateEditText.getText().toString();
                 String time = timeEditText.getText().toString();
                 String category = categoryEditText.getText().toString();
-                String isCompleted = isCompletedEditText.getText().toString();
 
                 ToDoItem toDoItem = new ToDoItem(title, details, date, time, category, false);
                 intent.putExtra(EXTRA_REPLY, toDoItem);
