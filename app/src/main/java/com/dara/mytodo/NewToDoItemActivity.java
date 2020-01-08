@@ -1,5 +1,7 @@
 package com.dara.mytodo;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class NewToDoItemActivity extends AppCompatActivity {
 
@@ -21,7 +23,6 @@ public class NewToDoItemActivity extends AppCompatActivity {
     private EditText dateEditText;
     private EditText timeEditText;
     private EditText categoryEditText;
-    private EditText isCompletedEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,9 @@ public class NewToDoItemActivity extends AppCompatActivity {
         dateEditText = findViewById(R.id.editText_date);
         timeEditText = findViewById(R.id.editText_time);
         categoryEditText = findViewById(R.id.editText_category);
-//        isCompletedEditText = findViewById(R.id.editText_isCompleted);
+
+        dateEditText.setOnClickListener(v -> showDatePicker());
+        timeEditText.setOnClickListener(v -> showTimePicker());
 
         final MaterialButton button = findViewById(R.id.btn_save);
         button.setOnClickListener(view -> {
@@ -45,19 +48,51 @@ public class NewToDoItemActivity extends AppCompatActivity {
                 String title = titleEditText.getText().toString();
                 String details = detailsEditText.getText().toString();
                 String date = dateEditText.getText().toString();
-                Date time = timeEditText.getText().toString();
+                String time = timeEditText.getText().toString();
                 String category = categoryEditText.getText().toString();
-//                String status = isCompletedEditText.getText().toString();
-//                boolean isCompleted = false;
-//                if (status.equals("T")) {
-//                    isCompleted = true;
-//                }
 
-                ToDoItem toDoItem = new ToDoItem(title, details, date, time, category, false);
+                ToDoItem toDoItem = new ToDoItem(title, details, date, time, category,
+                        false);
                 intent.putExtra(EXTRA_NEW_TODO, toDoItem);
                 setResult(RESULT_OK, intent);
             }
             finish();
         });
+    }
+
+    /**
+     * This displays a date picker when the start date field is clicked
+     * It also displays the date picked
+     */
+    private void showDatePicker() {
+        // Use the current time as the default values for the picker
+        Calendar c = Calendar.getInstance();
+        int calendarYear = c.get(Calendar.YEAR);
+        int calendarMonth = c.get(Calendar.MONTH);
+        int calendarDay = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year, month,
+                                                                        dayOfMonth)
+                -> dateEditText.setText(DateUtils.formatDate(dayOfMonth, month, year)),
+                calendarYear, calendarMonth, calendarDay);
+
+        datePickerDialog.show();
+    }
+
+    /**
+     * This displays a time picker when the start time field is clicked
+     * It also displays the date picked
+     */
+    private void showTimePicker() {
+        // Use the current time as the default values for the picker
+        Calendar c = Calendar.getInstance();
+        int calendarHour = c.get(Calendar.HOUR_OF_DAY);
+        int calendarMinute = c.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, minute)
+                -> timeEditText.setText(DateUtils.formatTime(hourOfDay, minute)), calendarHour,
+                calendarMinute, true);
+        timePickerDialog.show();
+
     }
 }

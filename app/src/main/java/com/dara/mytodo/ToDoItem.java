@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -22,56 +21,20 @@ public class ToDoItem implements Parcelable {
     private String title;
     private String details;
     private String category;
-    private Date startTime;
-    private String time;
+    private String startDate;
+    private String startTime;
     private Boolean isCompleted;
 
     // Constructor
-    public ToDoItem(@NonNull String title, String details, String category, Date date,
-                    String time, Boolean isCompleted) {
+    public ToDoItem(@NonNull String title, String details, String category, String startDate,
+                    String startTime, Boolean isCompleted) {
         this.title = title;
         this.details = details;
         this.category = category;
-        this.startTime = date;
-        this.time = time;
+        this.startDate = startDate;
+        this.startTime = startTime;
         this.isCompleted = isCompleted;
     }
-
-    // Parcelable implementation
-    protected ToDoItem(Parcel in) {
-        title = Objects.requireNonNull(in.readString());
-        details = in.readString();
-        category = in.readString();
-        time = in.readString();
-        byte tmpIsCompleted = in.readByte();
-        isCompleted = tmpIsCompleted == 0 ? null : tmpIsCompleted == 1;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(details);
-        dest.writeString(category);
-        dest.writeString(time);
-        dest.writeByte((byte) (isCompleted == null ? 0 : isCompleted ? 1 : 2));
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<ToDoItem> CREATOR = new Creator<ToDoItem>() {
-        @Override
-        public ToDoItem createFromParcel(Parcel in) {
-            return new ToDoItem(in);
-        }
-
-        @Override
-        public ToDoItem[] newArray(int size) {
-            return new ToDoItem[size];
-        }
-    };
 
     // Getters and setters
     @NonNull
@@ -99,20 +62,20 @@ public class ToDoItem implements Parcelable {
         this.category = category;
     }
 
-    public Date getStartTime() {
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public Boolean getCompleted() {
@@ -121,6 +84,44 @@ public class ToDoItem implements Parcelable {
 
     public void setCompleted(Boolean completed) {
         isCompleted = completed;
+    }
+
+    // Parcelable implementation
+    private ToDoItem(Parcel in) {
+        title = Objects.requireNonNull(in.readString());
+        details = in.readString();
+        category = in.readString();
+        startDate = in.readString();
+        startTime = in.readString();
+        byte tmpIsCompleted = in.readByte();
+        isCompleted = tmpIsCompleted == 0 ? null : tmpIsCompleted == 1;
+    }
+
+    public static final Creator<ToDoItem> CREATOR = new Creator<ToDoItem>() {
+        @Override
+        public ToDoItem createFromParcel(Parcel in) {
+            return new ToDoItem(in);
+        }
+
+        @Override
+        public ToDoItem[] newArray(int size) {
+            return new ToDoItem[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(details);
+        dest.writeString(category);
+        dest.writeString(startDate);
+        dest.writeString(startTime);
+        dest.writeByte((byte) (isCompleted == null ? 0 : isCompleted ? 1 : 2));
     }
 
 }

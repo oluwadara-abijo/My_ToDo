@@ -25,7 +25,7 @@
     <EditText
         android:id="@+id/editText_date"
         style="@style/EditTextStyle"
-        android:hint="@string/startTime"
+        android:hint="@string/start_date"
         android:inputType="numberDecimal|datetime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
     <EditText
         android:id="@+id/editText_time"
         style="@style/EditTextStyle"
-        android:hint="@string/time"
+        android:hint="@string/start_time"
         android:inputType="numberDecimal|datetime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

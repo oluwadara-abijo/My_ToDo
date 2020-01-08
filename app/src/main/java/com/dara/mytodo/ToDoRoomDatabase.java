@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {ToDoItem.class, ToDoList.class}, version = 1, exportSchema = false)
+@Database(entities = {ToDoItem.class, ToDoList.class}, version = 2, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class ToDoRoomDatabase extends RoomDatabase {
 
@@ -27,7 +27,9 @@ public abstract class ToDoRoomDatabase extends RoomDatabase {
             synchronized (ToDoRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            ToDoRoomDatabase.class, "todo_database").build();
+                            ToDoRoomDatabase.class, "todo_database")
+                            .fallbackToDestructiveMigration()
+                            .build();
                 }
             }
         }
