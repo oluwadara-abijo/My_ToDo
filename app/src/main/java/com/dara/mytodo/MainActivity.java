@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements ToDoListAdapter.I
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CREATE_NEW_ITEM && resultCode == RESULT_OK) {
-            ToDoItem toDoItem = data.getParcelableExtra(NewToDoItemActivity.EXTRA_REPLY);
+            ToDoItem toDoItem = data.getParcelableExtra(NewToDoItemActivity.EXTRA_NEW_TODO);
             mViewModel.insertItem(toDoItem);
         } else {
             Toast.makeText(

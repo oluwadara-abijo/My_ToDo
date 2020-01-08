@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -21,20 +22,56 @@ public class ToDoItem implements Parcelable {
     private String title;
     private String details;
     private String category;
-    private String date;
+    private Date startTime;
     private String time;
     private Boolean isCompleted;
 
     // Constructor
-    public ToDoItem(@NonNull String title, String details, String category, String date,
+    public ToDoItem(@NonNull String title, String details, String category, Date date,
                     String time, Boolean isCompleted) {
         this.title = title;
         this.details = details;
         this.category = category;
-        this.date = date;
+        this.startTime = date;
         this.time = time;
         this.isCompleted = isCompleted;
     }
+
+    // Parcelable implementation
+    protected ToDoItem(Parcel in) {
+        title = Objects.requireNonNull(in.readString());
+        details = in.readString();
+        category = in.readString();
+        time = in.readString();
+        byte tmpIsCompleted = in.readByte();
+        isCompleted = tmpIsCompleted == 0 ? null : tmpIsCompleted == 1;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(details);
+        dest.writeString(category);
+        dest.writeString(time);
+        dest.writeByte((byte) (isCompleted == null ? 0 : isCompleted ? 1 : 2));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<ToDoItem> CREATOR = new Creator<ToDoItem>() {
+        @Override
+        public ToDoItem createFromParcel(Parcel in) {
+            return new ToDoItem(in);
+        }
+
+        @Override
+        public ToDoItem[] newArray(int size) {
+            return new ToDoItem[size];
+        }
+    };
 
     // Getters and setters
     @NonNull
@@ -62,12 +99,12 @@ public class ToDoItem implements Parcelable {
         this.category = category;
     }
 
-    public String getDate() {
-        return date;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
     public String getTime() {
@@ -84,44 +121,6 @@ public class ToDoItem implements Parcelable {
 
     public void setCompleted(Boolean completed) {
         isCompleted = completed;
-    }
-
-    // Parcelable implementation
-    private ToDoItem(Parcel in) {
-        title = Objects.requireNonNull(in.readString());
-        details = in.readString();
-        category = in.readString();
-        date = in.readString();
-        time = in.readString();
-        byte tmpIsCompleted = in.readByte();
-        isCompleted = tmpIsCompleted == 0 ? null : tmpIsCompleted == 1;
-    }
-
-    public static final Creator<ToDoItem> CREATOR = new Creator<ToDoItem>() {
-        @Override
-        public ToDoItem createFromParcel(Parcel in) {
-            return new ToDoItem(in);
-        }
-
-        @Override
-        public ToDoItem[] newArray(int size) {
-            return new ToDoItem[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(details);
-        dest.writeString(category);
-        dest.writeString(date);
-        dest.writeString(time);
-        dest.writeByte((byte) (isCompleted == null ? 0 : isCompleted ? 1 : 2));
     }
 
 }
