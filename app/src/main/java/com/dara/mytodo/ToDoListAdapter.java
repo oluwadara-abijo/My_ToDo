@@ -1,6 +1,7 @@
 package com.dara.mytodo;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +16,25 @@ import java.util.List;
 
 public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoViewHolder> {
 
-    class ToDoViewHolder extends RecyclerView.ViewHolder {
-        private final TextView titleTextView;
-        private final TextView detailsTextView;
-        private final CheckBox checkBox;
-
-        private ToDoViewHolder(View itemView) {
-            super(itemView);
-            titleTextView = itemView.findViewById(R.id.tv_title);
-            detailsTextView = itemView.findViewById(R.id.tv_details);
-            checkBox = itemView.findViewById(R.id.checkbox);
-        }
-    }
-
     private final LayoutInflater mInflater;
     private List<ToDoItem> mItems;
+    private ItemClickListener mItemClickListener;
 
-    ToDoListAdapter(Context context) {
+    // Constructor
+    ToDoListAdapter(Context context, List<ToDoItem> items, ItemClickListener itemClickListener) {
         mInflater = LayoutInflater.from(context);
+        mItems = items;
+        mItemClickListener = itemClickListener;
+    }
+
+    // Interface to handle click events
+    interface ItemClickListener {
+        void onItemClick(ToDoItem item, ListenerType listenerType);
+    }
+
+    //Class to handle click interactions
+    enum ListenerType {
+        EDIT, MARK_DONE, UNMARK_DONE
     }
 
     @NotNull
@@ -46,21 +48,54 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoVi
     public void onBindViewHolder(@NotNull ToDoViewHolder holder, int position) {
         if (mItems != null) {
             ToDoItem currentItem = mItems.get(position);
-            holder.titleTextView.setText(currentItem.getTitle());
-            holder.detailsTextView.setText(currentItem.getDetails());
-            if (currentItem.isCompleted()) {
-                holder.checkBox.isChecked();
-            }
-
-            holder.checkBox.setOnClickListener(v -> {
-                boolean checked = ((CheckBox) v).isChecked();
-                if (checked) {
-                    currentItem.isCompleted();
-                }
-            });
+            holder.bind(currentItem);
         } else {
             // Covers the case of data not being ready yet.
             holder.titleTextView.setText("No Item");
+        }
+    }
+
+    class ToDoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final TextView titleTextView;
+        private final TextView detailsTextView;
+        private final CheckBox checkBox;
+
+        private ToDoViewHolder(View itemView) {
+            super(itemView);
+            titleTextView = itemView.findViewById(R.id.tv_title);
+            detailsTextView = itemView.findViewById(R.id.tv_details);
+            checkBox = itemView.findViewById(R.id.checkbox_completed);
+        }
+
+        @Override
+        public void onClick(View v) {
+            ToDoItem itemClicked = mItems.get(getAdapterPosition());
+            ListenerType listenerType = ListenerType.EDIT;
+            if (v.getId() == R.id.checkbox_completed) {
+                if (checkBox.isChecked()) {
+                    Log.d("TAG>>>", "Checkbox is checked");
+                    listenerType = ListenerType.MARK_DONE;
+                    mItems.remove(itemClicked);
+                    mItems.add(itemClicked);
+                } else {
+                    Log.d("TAG>>>", "Checkbox is not checked");
+                    listenerType = ListenerType.UNMARK_DONE;
+                }
+            }
+            mItemClickListener.onItemClick(itemClicked, listenerType);
+        }
+
+        private void bind(ToDoItem currentItem) {
+            titleTextView.setText(currentItem.getTitle());
+            detailsTextView.setText(currentItem.getDetails());
+            if (currentItem.getCompleted()) {
+                checkBox.setChecked(true);
+            }
+            if (currentItem.getDetails().isEmpty()) {
+                detailsTextView.setVisibility(View.GONE);
+            }
+            checkBox.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
     }
 

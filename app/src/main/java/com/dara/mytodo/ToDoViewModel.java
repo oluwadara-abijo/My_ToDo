@@ -28,6 +28,10 @@ public class ToDoViewModel extends AndroidViewModel {
         mRepository.insertItem(toDoItem);
     }
 
+    void updateItem(ToDoItem toDoItem) {
+        mRepository.updateItem(toDoItem);
+    }
+
     public void insertList(ToDoList toDoList) {
         mRepository.insertList(toDoList);
     }

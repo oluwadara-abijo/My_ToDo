@@ -33,6 +33,10 @@ public class ToDoRepository {
         ToDoRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertItem(toDoItem));
     }
 
+    void updateItem(ToDoItem toDoItem) {
+        ToDoRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateItem(toDoItem));
+    }
+
     void insertList(ToDoList toDoList) {
         ToDoRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertList(toDoList));
     }

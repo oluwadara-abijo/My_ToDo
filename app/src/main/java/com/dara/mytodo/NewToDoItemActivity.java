@@ -1,11 +1,11 @@
 package com.dara.mytodo;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -33,7 +33,6 @@ public class NewToDoItemActivity extends AppCompatActivity {
         categoryEditText = findViewById(R.id.editText_category);
         isCompletedEditText = findViewById(R.id.editText_isCompleted);
 
-
         final MaterialButton button = findViewById(R.id.btn_save);
         button.setOnClickListener(view -> {
             Intent intent = new Intent();
@@ -45,8 +44,13 @@ public class NewToDoItemActivity extends AppCompatActivity {
                 String date = dateEditText.getText().toString();
                 String time = timeEditText.getText().toString();
                 String category = categoryEditText.getText().toString();
+                String status = isCompletedEditText.getText().toString();
+                boolean isCompleted = false;
+                if (status.equals("T")) {
+                    isCompleted = true;
+                }
 
-                ToDoItem toDoItem = new ToDoItem(title, details, date, time, category, false);
+                ToDoItem toDoItem = new ToDoItem(title, details, date, time, category, isCompleted);
                 intent.putExtra(EXTRA_REPLY, toDoItem);
                 setResult(RESULT_OK, intent);
             }
