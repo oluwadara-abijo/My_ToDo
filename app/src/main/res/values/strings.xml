@@ -9,4 +9,6 @@
     <string name="empty_not_saved">Not saved because title is empty</string>
     <string name="empty_list">No to-dos yet\nAdd a new to-do</string>
     <string name="start_date">Start date</string>
+    <string name="channel_name">My ToDo channel</string>
+    <string name="channel_description">My ToDo channel description</string>
 </resources>

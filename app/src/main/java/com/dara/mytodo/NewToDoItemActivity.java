@@ -1,13 +1,19 @@
 package com.dara.mytodo;
 
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -15,7 +21,8 @@ import java.util.Calendar;
 
 public class NewToDoItemActivity extends AppCompatActivity {
 
-    public static final String EXTRA_NEW_TODO = "reply_extra";
+    public static final String EXTRA_NEW_TODO = "to_do_extra";
+    private final String CHANNEL_ID = "123";
 
     //UI elements
     private EditText titleEditText;
@@ -94,5 +101,52 @@ public class NewToDoItemActivity extends AppCompatActivity {
                 calendarMinute, true);
         timePickerDialog.show();
 
+    }
+
+    private void createNotification() {
+        // Create a pending intent for MainActivity
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        // Create notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_add_black_24dp)
+                .setContentTitle("My ToDo")
+                .setContentText("Your task starts now")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(123, builder.build());
+
+    }
+
+    private void createNotificationChannel() {
+        // Create notification channel for Android O upwards
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            // Register the channel with the system
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        createNotificationChannel();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        createNotification();
     }
 }
